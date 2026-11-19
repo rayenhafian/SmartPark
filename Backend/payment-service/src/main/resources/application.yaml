@@ -1,0 +1,41 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: payment-service
+  cloud:
+    config:
+      enabled: ${CONFIG_ENABLED:false}      # passer a true quand le Config Server tourne
+      import-check:
+        enabled: false
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/payment_db?createDatabaseIfNotExist=true}
+    username: ${DB_USER:payment}
+    password: ${DB_PASSWORD:payment}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: 5672
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASSWORD:guest}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/smartpark}
+
+eureka:
+  client:
+    enabled: ${EUREKA_ENABLED:false}        # passer a true quand Eureka tourne
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
