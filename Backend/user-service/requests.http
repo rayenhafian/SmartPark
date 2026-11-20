@@ -1,0 +1,48 @@
+### Extension "REST Client" (humao.rest-client) : cliquer sur "Send Request"
+### Récupérer un token Keycloak puis le coller ici
+@token = COLLE_TON_JWT_ICI
+@host = http://localhost:8081
+
+### Créer un profil (le keycloakId est pris dans le sub du JWT)
+POST {{host}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "firstName": "Aymen",
+  "lastName": "Test",
+  "email": "aymen@test.com",
+  "phone": "21612345678",
+  "preferences": "{\"lang\":\"fr\",\"notifications\":true}"
+}
+
+### Consulter un profil
+GET {{host}}/api/users/1
+Authorization: Bearer {{token}}
+
+### Ajouter un véhicule
+POST {{host}}/api/users/1/vehicles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "plateNumber": "123 TUN 4567",
+  "brand": "Peugeot",
+  "model": "208",
+  "color": "Gris"
+}
+
+### Lister les véhicules
+GET {{host}}/api/users/1/vehicles
+Authorization: Bearer {{token}}
+
+### Validation du conducteur (appel de MS4)
+GET {{host}}/api/users/keycloak/REMPLACE_PAR_SUB/validation
+Authorization: Bearer {{token}}
+
+### Désactiver un compte (ADMIN)
+PATCH {{host}}/api/users/1/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "active": false }

@@ -1,0 +1,15 @@
+# MySQL local dédié à MS1 (Database per Service)
+services:
+  user-db:
+    image: mysql:8.4
+    container_name: smartpark-user-db
+    environment:
+      MYSQL_DATABASE: user_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - user-db-data:/var/lib/mysql
+
+volumes:
+  user-db-data:
